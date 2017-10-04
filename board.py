@@ -6,7 +6,7 @@
 # - Since they are part of the searching
 # What we want from this class:
 # - List of all platforms
-# - List of all destination (houses? whatever we're calling them)
+# - List of all destination (house? box? whatever we're calling them)
 # - Get entry square
 # - Get exit square
 # - Tests for creating Board from string and check that items are where we expect
