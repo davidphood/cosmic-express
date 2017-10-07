@@ -1,7 +1,7 @@
 
-import Home
-import Platform
-import Tile
+from Home import Home
+from Platform import Platform
+from Tile import Tile
 
 # We can set up a board from a string
 # It represents and matrix of squares
@@ -20,17 +20,18 @@ import Tile
 
 class Board:
     def __init__(self, width, height):
-        self.tiles = [[Tile for i in xrange(width)] for i in xrange(height)]
+        #self.tiles = [[Tile() for i in xrange(width)] for i in xrange(height)]
+        self.tiles = [[Tile() for i in range(width)] for i in range(height)]
         self.platforms = []
         self.homes = []
 
     # I'd like to see Board using __getitem__ and __setitem__
     def addPlatform(self, platform):
-        x, y = platform.position
+        x, y = platform.position()
         self.tiles[x][y] = platform
         self.platforms.append(platform)
 
     def addHome(self, home):
-        x, y = home.position
-        self.times[x][y] = home
+        x, y = home.position()
+        self.tiles[x][y] = home
         self.homes.append(home)
