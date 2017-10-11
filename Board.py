@@ -26,6 +26,21 @@ class Board:
         self.homes = []
 
     # I'd like to see Board using __getitem__ and __setitem__
+    def __getitem__(self, key):
+        x, y = index
+        return self.tiles[x][y]
+
+    def __setitem__(self, key, value):
+        if not isinstance(value, Tile):
+            raise TypeError()
+        x, y = key
+        self.tiles[x][y] = value
+        value.position = key
+        if isinstance(value, Platform):
+            self.platforms.append(value)
+        if isinstance(value, Home):
+            self.homes.append(value)
+
     def addPlatform(self, platform):
         x, y = platform.position()
         self.tiles[x][y] = platform
