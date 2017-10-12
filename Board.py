@@ -1,5 +1,6 @@
 
 from Home import Home
+from Locomotive import Locomotive
 from Platform import Platform
 from Tile import Tile
 
@@ -20,14 +21,13 @@ from Tile import Tile
 
 class Board:
     def __init__(self, width, height):
-        #self.tiles = [[Tile() for i in xrange(width)] for i in xrange(height)]
         self.tiles = [[Tile() for i in range(width)] for i in range(height)]
-        self.platforms = []
         self.homes = []
+        self.platforms = []
+        self.locomotive = None
 
-    # I'd like to see Board using __getitem__ and __setitem__
     def __getitem__(self, key):
-        x, y = index
+        x, y = key
         return self.tiles[x][y]
 
     def __setitem__(self, key, value):
@@ -38,15 +38,5 @@ class Board:
         value.position = key
         if isinstance(value, Platform):
             self.platforms.append(value)
-        if isinstance(value, Home):
+        elif isinstance(value, Home):
             self.homes.append(value)
-
-    def addPlatform(self, platform):
-        x, y = platform.position()
-        self.tiles[x][y] = platform
-        self.platforms.append(platform)
-
-    def addHome(self, home):
-        x, y = home.position()
-        self.tiles[x][y] = home
-        self.homes.append(home)

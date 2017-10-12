@@ -16,21 +16,24 @@ class TestLocomotive(unittest.TestCase):
         self.assertFalse(board[6, 3].isEmpty())
         self.assertTrue(board[1, 3].isEmpty())
 
+        # We need to place the exit locations/tracks
+        # * Possibly placing a track directly, instead of via a train, makes it an exit position
+        # * Possibly any track placed before a locomotive is an exit position (use the term position instead of location)
+        # Then there are two options to take here:
+        # 1. Place the locomotive (on the start position), the locomotive then places a track whenever it moves
+        # 2. Keep the locomotive separate to the board and just have it act on the board
+        #    * or have it create a separate track so the board remains the same, but the track changes with our search
+
         locomotive = Locomotive(1)
-        # Ideally board[(0,3)] = locomotive
+        # Ideally board[0,3] = locomotive
         board.addLocomotive(0,3, locomotive)
         # Should this be Direction.East?
-        locomotive.moveDirection(Direction.Right)
-        locomotive.moveDirection(Direction.Right)
-        locomotive.moveDirection(Direction.Right)
-        locomotive.moveDirection(Direction.Right)
-        locomotive.moveDirection(Direction.Right)
-        locomotive.moveDirection(Direction.Right)
-        # Do we ask the board or the locomotive?
-        self.assertFalse(board.isComplete())
-        self.assertFalse(locomotive.isFinished())
-        locomotive.moveDirection(Direction.Right)
-        # Do we ask the board or the locomotive?
-        # isComplete, isFinished, isDone?
-        self.assertTrue(board.isComplete())
-        self.assertFalse(locomotive.isFinished())
+        locomotive.move(Direction.Right)
+        locomotive.move(Direction.Right)
+        locomotive.move(Direction.Right)
+        locomotive.move(Direction.Right)
+        locomotive.move(Direction.Right)
+        locomotive.move(Direction.Right)
+        self.assertFalse(locomotive.isTrackComplete())
+        locomotive.move(Direction.Right)
+        self.assertFalse(locomotive.isTrackComplete())
