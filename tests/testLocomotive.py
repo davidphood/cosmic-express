@@ -3,6 +3,7 @@ import unittest
 
 from Board import Board
 from Colour import Colour
+from Direction import Direction
 from Home import Home
 from Locomotive import Locomotive
 from Platform import Platform
@@ -19,15 +20,14 @@ class TestLocomotive(unittest.TestCase):
         # We need to place the exit locations/tracks
         # * Possibly placing a track directly, instead of via a train, makes it an exit position
         # * Possibly any track placed before a locomotive is an exit position (use the term position instead of location)
-        # Then there are two options to take here:
+        # Then there are some options to take here:
         # 1. Place the locomotive (on the start position), the locomotive then places a track whenever it moves
         # 2. Keep the locomotive separate to the board and just have it act on the board
         #    * or have it create a separate track so the board remains the same, but the track changes with our search
+        # 3. Have a type of Track that's a TrackExit
 
         locomotive = Locomotive(1)
-        # Ideally board[0,3] = locomotive
-        board.addLocomotive(0,3, locomotive)
-        # Should this be Direction.East?
+        board[0, 3] = locomotive
         locomotive.move(Direction.Right)
         locomotive.move(Direction.Right)
         locomotive.move(Direction.Right)
