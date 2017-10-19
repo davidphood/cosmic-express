@@ -1,8 +1,8 @@
 
-from Home import Home
-from Locomotive import Locomotive
-from Platform import Platform
 from Tile import Tile
+from Track import EntryTrack, ExitTrack
+from Home import Home
+from Platform import Platform
 
 # We can set up a board from a string
 # It represents and matrix of squares
@@ -21,10 +21,11 @@ from Tile import Tile
 
 class Board:
     def __init__(self, width, height):
-        self.tiles = [[Tile() for i in range(width)] for i in range(height)]
+        self.tiles = [[Tile() for y in range(height)] for x in range(width)]
+        self.entryTrack = None
+        self.exitTracks = []
         self.homes = []
         self.platforms = []
-        self.locomotive = None
 
     def __getitem__(self, key):
         x, y = key
@@ -36,7 +37,12 @@ class Board:
         x, y = key
         self.tiles[x][y] = value
         value.position = key
-        if isinstance(value, Platform):
+        if isinstance(value, EntryTrack):
+            assert(self.entryTrack == None)
+            self.entryTrack = value
+        elif isinstance(value, ExitTrack):
+            self.exitTracks.append(value)
+        elif isinstance(value, Platform):
             self.platforms.append(value)
         elif isinstance(value, Home):
             self.homes.append(value)
